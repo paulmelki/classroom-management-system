@@ -14,9 +14,9 @@ public class Main {
 //        c2.setTitle_classroom("Java Technologies");
 //        classrooms.add(c1);
 //        classrooms.add(c2);
-//        MainMenu newMainMenu = new MainMenu();
+        MainMenu newMainMenu = new MainMenu();
 
-        Classroom_Creator cc = new Classroom_Creator();
+//        Classroom_Creator cc = new Classroom_Creator();
 //        Classroom_Picker cp = new Classroom_Picker();
     }
 }

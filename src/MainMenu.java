@@ -112,6 +112,10 @@ public class MainMenu extends JFrame implements ActionListener {
         this.add(eastPanel, BorderLayout.EAST);
         this.add(southPanel, BorderLayout.SOUTH);
 
+        this.button_goto_classroom.addActionListener(this);
+        this.createClassroom_menuItem.addActionListener(this);
+        this.goToClassrooms_menuItem.addActionListener(this);
+
         this.setVisible(true);
 
     }
@@ -124,6 +128,19 @@ public class MainMenu extends JFrame implements ActionListener {
 
             System.exit(0);
         }
+
+        else if (e.getSource().equals(this.button_goto_classroom)
+                || e.getSource().equals(this.goToClassrooms_menuItem)) {
+
+            Classroom_Picker cp = new Classroom_Picker();
+        }
+
+        else if (e.getSource().equals(createClassroom_menuItem)) {
+
+            Classroom_Creator cc = new Classroom_Creator();
+        }
+
+
 
     }
 }

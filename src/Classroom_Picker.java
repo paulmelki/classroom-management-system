@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Classroom_Picker extends JFrame implements ActionListener {
 
@@ -15,9 +16,9 @@ public class Classroom_Picker extends JFrame implements ActionListener {
     private ImageIcon image_no_clasrooms = new ImageIcon("images/no_classrooms.png");
     private JLabel label_no_classrooms = new JLabel(image_no_clasrooms);
 
-    private DefaultListModel model = new DefaultListModel();
+    private JMenuItem refresh_button = new JMenuItem("Refresh");
 
-    private JButton arrayOfButtons[] = new JButton[50];
+    private ArrayList<JButton> listOfButtons = new ArrayList<JButton>();
     private GridLayout gridLayout = new GridLayout(12, 5, 4, 4);
 
     public Classroom_Picker() {
@@ -30,6 +31,7 @@ public class Classroom_Picker extends JFrame implements ActionListener {
         this.setJMenuBar(this.menuBar);
 
         this.menuBar.add(this.edit);
+        this.menuBar.add(refresh_button);
         this.edit.add(new_classroom_menuItem);
         this.edit.add(delete_classroom_menuItem);
 
@@ -40,8 +42,41 @@ public class Classroom_Picker extends JFrame implements ActionListener {
 
         } else {
 
+//            this.setLayout(gridLayout);
+//
+//            for (int i = 0; i < Main.classrooms.size(); i++) {
+//
+//                JButton button_classroom = new JButton(
+//                        Main.classrooms.get(i).getCode_classroom() + " - " +
+//                                Main.classrooms.get(i).getTitle_classroom());
+//
+//                button_classroom.setBackground(new Color(7, 110, 147));
+//                button_classroom.setForeground(Color.WHITE);
+//                button_classroom.addActionListener(this);
+//                this.add(button_classroom);
+//                this.listOfButtons.add(button_classroom);
+//
+//            }
+
+        }
+
+
+        this.new_classroom_menuItem.addActionListener(this);
+        this.delete_classroom_menuItem.addActionListener(this);
+        this.refresh_button.addActionListener(this);
+
+        this.setVisible(true);
+    }
+
+    private void changeInterface() {
+
+        if (Main.classrooms.size() > 0) {
+
+            this.getContentPane().removeAll();
+
             this.setLayout(gridLayout);
-//            this.add(list_classrooms);
+
+            this.listOfButtons = new ArrayList<JButton>();
 
             for (int i = 0; i < Main.classrooms.size(); i++) {
 
@@ -53,26 +88,41 @@ public class Classroom_Picker extends JFrame implements ActionListener {
                 button_classroom.setForeground(Color.WHITE);
                 button_classroom.addActionListener(this);
                 this.add(button_classroom);
-                this.arrayOfButtons[i] = button_classroom;
-
+                this.listOfButtons.add(button_classroom);
+                this.paintComponent(this.getGraphics());
             }
 
         }
-
-        this.setVisible(true);
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        for (int i = 0; i < this.arrayOfButtons.length; i++) {
+        if (e.getSource().equals(this.new_classroom_menuItem)) {
 
-            if (e.getSource().equals(arrayOfButtons[i])) {
+            Classroom_Creator cc = new Classroom_Creator();
+            System.out.println("Number of Classrooms: " + Main.classrooms.size());
+        } else if (e.getSource().equals(this.refresh_button)) {
+
+            changeInterface();
+        }
+
+        for (int i = 0; i < this.listOfButtons.size(); i++) {
+
+            if (e.getSource().equals(this.listOfButtons.get(i))) {
                 System.out.println(Main.classrooms.get(i).getTitle_classroom());
             }
         }
 
 
     }
+
+
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponents(g);
+
+    }
+
 }
+

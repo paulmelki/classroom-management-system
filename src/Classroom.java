@@ -10,8 +10,6 @@ public class Classroom {
     private String code_classroom;
     private String title_classroom;
     private String instructorName_classroom;
-    private Date dateCreated_classroom;
-    private Date dateEnds_classroom;
     private int maximumNumberOfStudents;
     private int numberOfEnrolledStudents = 0;
     private int numberOfTests;
@@ -24,18 +22,16 @@ public class Classroom {
 
     public Classroom() {
 
-        this("", "", "", new Date(0), new Date(0), 0);
+        this("", "", "", 0);
     }
 
 
     public Classroom(String code_classroom, String title_classroom, String instructorName_classroom,
-                     Date dateCreated_classroom, Date dateEnds_classroom, int maximumNumberOfStudents) {
+                     int maximumNumberOfStudents) {
 
         this.code_classroom = code_classroom;
         this.title_classroom = title_classroom;
         this.instructorName_classroom = instructorName_classroom;
-        this.dateCreated_classroom = dateCreated_classroom;
-        this.dateEnds_classroom = dateEnds_classroom;
         this.maximumNumberOfStudents = maximumNumberOfStudents;
     }
 
@@ -56,16 +52,6 @@ public class Classroom {
     public void setInstructorName_classroom(String instructorName_classroom) {
 
         this.instructorName_classroom = instructorName_classroom;
-    }
-
-    public void setDateCreated_classroom(Date dateCreated_classroom) {
-
-        this.dateCreated_classroom = dateCreated_classroom;
-    }
-
-    public void setDateEnds_classroom(Date dateEnds_classroom) {
-
-        this.dateEnds_classroom = dateEnds_classroom;
     }
 
     public void setMaximumNumberOfStudents(int maximumNumberOfStudents) {
@@ -96,16 +82,6 @@ public class Classroom {
     public String getInstructorName_classroom() {
 
         return this.instructorName_classroom;
-    }
-
-    public Date getDateCreated_classroom() {
-
-        return this.dateCreated_classroom;
-    }
-
-    public Date getDateEnds_classroom() {
-
-        return this.dateEnds_classroom;
     }
 
     public int getMaximumNumberOfStudents() {
