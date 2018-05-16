@@ -110,7 +110,8 @@ public class Classroom_Picker extends JFrame implements ActionListener {
         for (int i = 0; i < this.listOfButtons.size(); i++) {
 
             if (e.getSource().equals(this.listOfButtons.get(i))) {
-                System.out.println(Main.classrooms.get(i).getTitle_classroom());
+//                System.out.println(Main.classrooms.get(i).getTitle_classroom());
+                Classroom_View classroom_view = new Classroom_View(Main.classrooms.get(i));
             }
         }
 

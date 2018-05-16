@@ -14,6 +14,7 @@ public class Classroom {
     private int numberOfEnrolledStudents = 0;
     private int numberOfTests;
     private ArrayList<Student> enrolledStudents;
+    private ArrayList<Test> tests;
 
 
     /**
@@ -99,6 +100,16 @@ public class Classroom {
         return this.numberOfEnrolledStudents;
     }
 
+    public ArrayList<Student> getEnrolledStudents() {
+
+        return this.enrolledStudents;
+    }
+
+    public ArrayList<Test> getTests() {
+
+        return this.tests;
+    }
+
     /**
      * Function that enrolls a new student in this classroom
      *
@@ -109,8 +120,13 @@ public class Classroom {
 
         if (newStudent != null) {
 
+            if (this.enrolledStudents == null) {
+                this.enrolledStudents = new ArrayList<Student>();
+            }
+
             if (this.enrolledStudents.size() < this.maximumNumberOfStudents) {
                 this.enrolledStudents.add(newStudent);
+                this.numberOfEnrolledStudents++;
 
                 return true;
             } else {
@@ -164,6 +180,33 @@ public class Classroom {
             this.enrolledStudents.remove(index);
             return true;
         }
+    }
+
+
+    /***
+     * Function that adds a new test to this classroom. This method also directly adds all the students in this course
+     * to the test
+     * @param newTest
+     * @return true if the course has been inserted, false if the course has not been added due to reaching the
+     * maximum number of tests in this course
+     */
+    public boolean addTest(Test newTest) {
+
+        if (this.tests == null) {
+
+            this.tests = new ArrayList<Test>();
+        }
+
+        this.tests.add(newTest);
+        this.numberOfTests++;
+
+        for (int i = 0; i < this.numberOfEnrolledStudents; i++) {
+
+            newTest.addStudent(this.enrolledStudents.get(i));
+        }
+
+        return true;
+
     }
 
 

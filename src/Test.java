@@ -1,5 +1,3 @@
-import com.sun.org.glassfish.external.statistics.Stats;
-
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -12,7 +10,6 @@ public class Test {
     private String title_test;
     private Classroom class_test;
     private double overallGrade_test;
-    private Date date_test;
     private String description_test;
     // A list of the students who are taking the test
     private ArrayList<Student> students_test;
@@ -31,7 +28,6 @@ public class Test {
         this.title_test = title_test;
         this.class_test = class_test;
         this.overallGrade_test = overallGrade_test;
-        this.date_test = date_test;
         this.description_test = description_test;
 
     }
@@ -65,14 +61,6 @@ public class Test {
         this.overallGrade_test = overallGrade_test;
     }
 
-    public Date getDate_test() {
-        return date_test;
-    }
-
-    public void setDate_test(Date date_test) {
-        this.date_test = date_test;
-    }
-
     public String getDescription_test() {
         return description_test;
     }
@@ -91,6 +79,16 @@ public class Test {
      * FUNCTION ADD STUDENT THAT ADDS A NEW STUDENT TO THE ARRAYLIST OF STUDENTS TAKING THE TEST
      */
     public void addStudent(Student newStudent) {
+
+        if (this.students_test == null) {
+
+            this.students_test = new ArrayList<Student>();
+        }
+
+        if (this.grades_test == null) {
+
+            this.grades_test = new ArrayList<Double>();
+        }
 
         if (!newStudent.getName_student().equals("")) {
             this.students_test.add(newStudent);
