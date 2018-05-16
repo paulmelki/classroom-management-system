@@ -9,7 +9,7 @@ public class Student {
     private String id_student;
     private String email_student;
     private boolean isMale_student;
-    private Date dob_student;
+    private boolean isGraduate;
 
 
     /**
@@ -17,16 +17,16 @@ public class Student {
      */
     public Student() {
 
-        this("", "", "", true, new Date(0));
+        this("", "", "", true, false);
     }
 
-    public Student(String name, String id, String email, boolean isMale, Date dob) {
+    public Student(String name, String id, String email, boolean isMale, boolean isGraduate) {
 
         this.name_student = name;
         this.id_student = id;
         this.email_student = email;
         this.isMale_student = isMale;
-        this.dob_student = dob;
+        this.isGraduate = isGraduate;
 
     }
 
@@ -53,11 +53,6 @@ public class Student {
         this.isMale_student = isMale_student;
     }
 
-    void setDob_student(Date dob_student) {
-
-        this.dob_student = dob_student;
-    }
-
     String getName_student() {
 
         return this.name_student;
@@ -78,9 +73,12 @@ public class Student {
         return this.isMale_student;
     }
 
-    Date getDob_student() {
+    public boolean isGraduate() {
+        return isGraduate;
+    }
 
-        return this.dob_student;
+    public void setGraduate(boolean graduate) {
+        isGraduate = graduate;
     }
 
 

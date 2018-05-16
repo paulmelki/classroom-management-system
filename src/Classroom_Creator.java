@@ -11,7 +11,6 @@ public class Classroom_Creator extends JFrame implements ActionListener {
     private JLabel label_title_classroom = new JLabel(" * Classroom Title: ");
     private JLabel label_instructorName_classroom = new JLabel(" * Instructor's name: ");
     private JLabel label_maximumNumberOfStudents_classroom = new JLabel(" * Maximum number of students: ");
-    private JLabel label_numberOfTests_classroom = new JLabel("Number of Tests: ");
 
     private JLabel label_warning = new JLabel("Fields that have * are obligatory");
 
@@ -19,7 +18,6 @@ public class Classroom_Creator extends JFrame implements ActionListener {
     private JTextField textField_title_classroom = new JTextField(14);
     private JTextField textField_instructorName_classroom = new JTextField(14);
     private JTextField textField_maximumNumberOfStudents_classroom = new JTextField(14);
-    private JTextField textField_numberOfTests_classroom = new JTextField(14);
 
     private ImageIcon icon_title = new ImageIcon("images/classroom_creator.png");
     private JLabel titleLabel = new JLabel(icon_title);
@@ -28,7 +26,7 @@ public class Classroom_Creator extends JFrame implements ActionListener {
     private JButton cancel_button = new JButton("Cancel");
 
     private BorderLayout borderLayout = new BorderLayout(5, 5);
-    private GridLayout gridLayout = new GridLayout(6, 1, 5, 40);
+    private GridLayout gridLayout = new GridLayout(5, 1, 5, 40);
 
     private JPanel northPanel = new JPanel();
     private JPanel leftPanel = new JPanel(gridLayout);
@@ -39,7 +37,7 @@ public class Classroom_Creator extends JFrame implements ActionListener {
 
     public Classroom_Creator() {
 
-        this.setSize(400, 600);
+        this.setSize(400, 500);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setTitle("Create classroom");
@@ -56,19 +54,17 @@ public class Classroom_Creator extends JFrame implements ActionListener {
         leftPanel.add(label_title_classroom);
         leftPanel.add(label_instructorName_classroom);
         leftPanel.add(label_maximumNumberOfStudents_classroom);
-        leftPanel.add(label_numberOfTests_classroom);
 
         rightPanel.add(textField_code_classroom);
         rightPanel.add(textField_title_classroom);
         rightPanel.add(textField_instructorName_classroom);
         rightPanel.add(textField_maximumNumberOfStudents_classroom);
-        rightPanel.add(textField_numberOfTests_classroom);
 
         label_warning.setForeground(Color.RED);
         southPanel.add(label_warning, BorderLayout.NORTH);
 //        southPanel.add(southCenterPanel);
 
-        submit_button.setBackground(new Color(17, 89, 137));
+        submit_button.setBackground(new Color(12, 101, 116));
         submit_button.setForeground(Color.WHITE);
         cancel_button.setBackground(Color.RED);
         cancel_button.setForeground(Color.WHITE);
@@ -113,14 +109,6 @@ public class Classroom_Creator extends JFrame implements ActionListener {
                             this.textField_instructorName_classroom.getText(),
                             Integer.parseInt(textField_maximumNumberOfStudents_classroom.getText())
                     );
-
-
-                    if (!this.textField_numberOfTests_classroom.getText().equals("")) {
-
-                        newClassroom.setNumberOfTests(
-                                Integer.parseInt(textField_numberOfTests_classroom.getText()));
-
-                    }
 
 
                     Main.classrooms.add(newClassroom);

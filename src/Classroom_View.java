@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Classroom_View extends JFrame implements ActionListener {
 
@@ -12,7 +13,7 @@ public class Classroom_View extends JFrame implements ActionListener {
     private JMenu menu_students = new JMenu("Students");
     private JMenu menu_tests = new JMenu("Tests");
     private JMenu menu_edit = new JMenu("Edit");
-    private JMenu menu_refresh = new JMenu("Refresh");
+    private JMenuItem menu_refresh = new JMenuItem("Refresh");
 
     private JMenuItem menuItem_AddStudent = new JMenuItem("Add a new student");
     private JMenuItem menuItem_removeStudent = new JMenuItem("Remove a student");
@@ -44,6 +45,9 @@ public class Classroom_View extends JFrame implements ActionListener {
     private JList<String> listOfTests;
 
     private JLabel label_noTests = new JLabel("There are no tests in this course");
+    private JLabel label_noStudents = new JLabel("There are no students in this course");
+
+    private ArrayList<Integer> indices = new ArrayList<Integer>();
 
     public Classroom_View(Classroom thisClassroom) {
 
@@ -106,18 +110,31 @@ public class Classroom_View extends JFrame implements ActionListener {
         this.label_numberOfEnrolledStudents.setForeground(new Color(7, 234, 56));
         this.leftPanel_northPanel.add(label_numberOfEnrolledStudents);
 
-        this.listModel_students = new DefaultListModel<String>();
-        for (int i = 0; i < thisClassroom.getNumberOfEnrolledStudents(); i++) {
+        if (thisClassroom.getNumberOfEnrolledStudents() > 0) {
+            this.listModel_students = new DefaultListModel<String>();
+            for (int i = 0; i < thisClassroom.getNumberOfEnrolledStudents(); i++) {
 
-            this.listModel_students.addElement(thisClassroom.getEnrolledStudents().get(i).getId_student() + " - " +
-                    thisClassroom.getEnrolledStudents().get(i).getName_student());
+                this.listModel_students.addElement(thisClassroom.getEnrolledStudents().get(i).getId_student() + " - " +
+                        thisClassroom.getEnrolledStudents().get(i).getName_student());
+
+            }
+
+
+            this.listOfStudents = new JList<>(listModel_students);
+            this.listOfStudents.setFont(new Font("Sans-Serif", Font.BOLD, 18));
+            this.listOfStudents.setPreferredSize(new Dimension(400, 700));
+            this.rightPanel.add(this.listOfStudents, BorderLayout.CENTER);
+        } else {
+
+            this.label_noStudents.setOpaque(true);
+            this.label_noStudents.setHorizontalAlignment(SwingConstants.CENTER);
+            this.label_noStudents.setFont(new Font("Sans-Serif", Font.BOLD, 18));
+            this.label_noStudents.setBackground(new Color(232, 232, 232));
+            this.label_noStudents.setForeground(new Color(22, 106, 140));
+            this.label_noStudents.setPreferredSize(new Dimension(400, 350));
+            this.rightPanel.add(this.label_noStudents, BorderLayout.CENTER);
 
         }
-
-        this.listOfStudents = new JList<>(listModel_students);
-        this.listOfStudents.setFont(new Font("Sans-Serif", Font.BOLD, 18));
-        this.listOfStudents.setPreferredSize(new Dimension(400, 700));
-        this.rightPanel.add(this.listOfStudents, BorderLayout.CENTER);
 
         this.label_students.setFont(new Font("Sans-Serif", Font.BOLD, 20));
         this.label_students.setOpaque(true);
@@ -153,6 +170,8 @@ public class Classroom_View extends JFrame implements ActionListener {
         }
 
         this.menu_refresh.addActionListener(this);
+        this.menuItem_AddStudent.addActionListener(this);
+        this.menuItem_removeStudent.addActionListener(this);
 
         this.setVisible(true);
 
@@ -160,6 +179,8 @@ public class Classroom_View extends JFrame implements ActionListener {
 
     private void changeInterface() {
 
+        this.remove(this.label_noStudents);
+        this.remove(this.label_noTests);
 
         if (thisClassroom.getNumberOfTests() > 0) {
 
@@ -176,23 +197,56 @@ public class Classroom_View extends JFrame implements ActionListener {
             this.leftPanel_southPanel.add(this.listOfTests);
         }
 
-        if (thisClassroom.getNumberOfEnrolledStudents() > 0) {
 
+        if (thisClassroom.getNumberOfEnrolledStudents() > 0) {
+            this.listModel_students = new DefaultListModel<String>();
             for (int i = 0; i < thisClassroom.getNumberOfEnrolledStudents(); i++) {
 
-                if (!(this.listModel_students.contains(thisClassroom.getEnrolledStudents().get(i).getId_student() + " - " +
-                        thisClassroom.getEnrolledStudents().get(i).getName_student()))) {
-
-                    this.listModel_students.addElement(thisClassroom.getEnrolledStudents().get(i).getId_student() + " - " +
-                            thisClassroom.getEnrolledStudents().get(i).getName_student());
-
-                }
+                this.listModel_students.addElement(thisClassroom.getEnrolledStudents().get(i).getId_student() + " - " +
+                        thisClassroom.getEnrolledStudents().get(i).getName_student());
 
             }
 
+
+            this.listOfStudents = new JList<>(listModel_students);
+            this.listOfStudents.setFont(new Font("Sans-Serif", Font.BOLD, 18));
+            this.listOfStudents.setPreferredSize(new Dimension(400, 700));
+            this.rightPanel.add(this.listOfStudents, BorderLayout.CENTER);
         }
 
+
         this.paintComponent(this.getGraphics());
+    }
+
+
+    public void receiveIndices(ArrayList<Integer> indices, int operationType) {
+
+        this.indices = indices;
+        if (this.indices.size() > 0) {
+
+            for (Integer i : this.indices) {
+
+                System.out.println(Main.students.get(i).getName_student());
+            }
+
+            if (operationType == Student_Listing.TYPE_ADD) {
+
+                for (Integer i : this.indices) {
+
+                    thisClassroom.enrollStudent(Main.students.get(i));
+                }
+            } else if (operationType == Student_Listing.TYPE_DELETE) {
+
+                for (Integer i : this.indices) {
+
+                    this.listModel_students.removeElement(thisClassroom.getEnrolledStudents().get(i).getId_student() + " - " +
+                            thisClassroom.getEnrolledStudents().get(i).getName_student());
+                    thisClassroom.disenrollStudent(Main.students.get(i));
+                }
+            }
+        }
+
+        this.indices.clear();
     }
 
     @Override
@@ -201,6 +255,13 @@ public class Classroom_View extends JFrame implements ActionListener {
         if (e.getSource().equals(this.menu_refresh)) {
 
             this.changeInterface();
+        } else if (e.getSource().equals(this.menuItem_AddStudent)) {
+
+            Student_Listing sl = new Student_Listing(this, Student_Listing.TYPE_ADD);
+
+        } else if (e.getSource().equals(this.menuItem_removeStudent)) {
+
+            Student_Listing sl = new Student_Listing(this, Student_Listing.TYPE_DELETE);
         }
 
 

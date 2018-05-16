@@ -5,6 +5,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 
 public class MainMenu extends JFrame implements ActionListener {
 
@@ -64,6 +65,7 @@ public class MainMenu extends JFrame implements ActionListener {
     private BorderLayout southPanelLayout = new BorderLayout(20, 20);
     private JPanel southPanel = new JPanel(southPanelLayout);
 
+    private String documentationLink = "https://drive.google.com/file/d/1ZkuoQsaCZ6xW9TukYtYxo-4iYl0v2LEI/view";
 
     public MainMenu() {
 
@@ -115,6 +117,11 @@ public class MainMenu extends JFrame implements ActionListener {
         this.button_goto_classroom.addActionListener(this);
         this.createClassroom_menuItem.addActionListener(this);
         this.goToClassrooms_menuItem.addActionListener(this);
+        this.button_goto_students.addActionListener(this);
+        this.goToStudents_menuItem.addActionListener(this);
+        this.registerNewStudent_menuItem.addActionListener(this);
+
+        this.checkDocumentation_menuItem.addActionListener(this);
 
         this.setVisible(true);
 
@@ -140,7 +147,31 @@ public class MainMenu extends JFrame implements ActionListener {
             Classroom_Creator cc = new Classroom_Creator();
         }
 
+        else if (e.getSource().equals(this.button_goto_students)
+                || e.getSource().equals(this.goToStudents_menuItem)) {
+
+            Student_Picker sp = new Student_Picker();
+        }
+
+        else if (e.getSource().equals(this.registerNewStudent_menuItem)) {
+
+            Student_Creator sc = new Student_Creator();
+        }
+
+        else if (e.getSource().equals(this.checkDocumentation_menuItem)) {
+
+            this.openWebpage(this.documentationLink);
+        }
 
 
+
+    }
+
+    private void openWebpage(String urlString) {
+        try {
+            Desktop.getDesktop().browse(new URL(urlString).toURI());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

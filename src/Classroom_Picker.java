@@ -23,6 +23,8 @@ public class Classroom_Picker extends JFrame implements ActionListener {
 
     public Classroom_Picker() {
 
+        changeInterface();
+
         this.setSize(800, 700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -40,26 +42,7 @@ public class Classroom_Picker extends JFrame implements ActionListener {
 
             this.add(label_no_classrooms);
 
-        } else {
-
-//            this.setLayout(gridLayout);
-//
-//            for (int i = 0; i < Main.classrooms.size(); i++) {
-//
-//                JButton button_classroom = new JButton(
-//                        Main.classrooms.get(i).getCode_classroom() + " - " +
-//                                Main.classrooms.get(i).getTitle_classroom());
-//
-//                button_classroom.setBackground(new Color(7, 110, 147));
-//                button_classroom.setForeground(Color.WHITE);
-//                button_classroom.addActionListener(this);
-//                this.add(button_classroom);
-//                this.listOfButtons.add(button_classroom);
-//
-//            }
-
         }
-
 
         this.new_classroom_menuItem.addActionListener(this);
         this.delete_classroom_menuItem.addActionListener(this);
@@ -67,6 +50,7 @@ public class Classroom_Picker extends JFrame implements ActionListener {
 
         this.setVisible(true);
     }
+
 
     private void changeInterface() {
 
@@ -84,7 +68,7 @@ public class Classroom_Picker extends JFrame implements ActionListener {
                         Main.classrooms.get(i).getCode_classroom() + " - " +
                                 Main.classrooms.get(i).getTitle_classroom());
 
-                button_classroom.setBackground(new Color(7, 110, 147));
+                button_classroom.setBackground(new Color(12, 101, 116));
                 button_classroom.setForeground(Color.WHITE);
                 button_classroom.addActionListener(this);
                 this.add(button_classroom);
@@ -102,6 +86,7 @@ public class Classroom_Picker extends JFrame implements ActionListener {
 
             Classroom_Creator cc = new Classroom_Creator();
             System.out.println("Number of Classrooms: " + Main.classrooms.size());
+
         } else if (e.getSource().equals(this.refresh_button)) {
 
             changeInterface();
@@ -110,8 +95,8 @@ public class Classroom_Picker extends JFrame implements ActionListener {
         for (int i = 0; i < this.listOfButtons.size(); i++) {
 
             if (e.getSource().equals(this.listOfButtons.get(i))) {
-//                System.out.println(Main.classrooms.get(i).getTitle_classroom());
                 Classroom_View classroom_view = new Classroom_View(Main.classrooms.get(i));
+                this.dispose();
             }
         }
 

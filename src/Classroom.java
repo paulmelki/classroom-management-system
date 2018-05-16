@@ -13,8 +13,8 @@ public class Classroom {
     private int maximumNumberOfStudents;
     private int numberOfEnrolledStudents = 0;
     private int numberOfTests;
-    private ArrayList<Student> enrolledStudents;
-    private ArrayList<Test> tests;
+    private ArrayList<Student> enrolledStudents = new ArrayList<Student>();
+    private ArrayList<Test> tests = new ArrayList<Test>();
 
 
     /**
@@ -137,6 +137,28 @@ public class Classroom {
 
             return false;
         }
+    }
+
+
+    public boolean disenrollStudent(Student student) {
+
+        if (student != null) {
+
+            for (int i = 0; i < this.enrolledStudents.size(); i++) {
+
+                if (student.equals(this.enrolledStudents.get(i)))
+                {
+                    this.enrolledStudents.remove(i);
+                    this.numberOfEnrolledStudents--;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        return false;
+
     }
 
 
